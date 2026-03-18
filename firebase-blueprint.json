@@ -1,0 +1,72 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile containing subscription and usage data.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "User's email address."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "user"],
+          "description": "User's role."
+        },
+        "subscriptionTier": {
+          "type": "string",
+          "enum": ["free", "pro"],
+          "description": "User's subscription tier."
+        },
+        "generationsCount": {
+          "type": "number",
+          "description": "Number of voiceovers generated."
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "When the profile was created."
+        }
+      },
+      "required": ["email", "role", "subscriptionTier", "generationsCount", "createdAt"]
+    },
+    "VoiceoverScript": {
+      "title": "VoiceoverScript",
+      "description": "A saved script for documentary voiceover generation.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who owns this script."
+        },
+        "title": {
+          "type": "string",
+          "description": "A short title for the script."
+        },
+        "text": {
+          "type": "string",
+          "description": "The Arabic text to be narrated."
+        },
+        "createdAt": {
+          "type": "timestamp",
+          "description": "When the script was created."
+        }
+      },
+      "required": ["userId", "title", "text", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "User profiles containing subscription and usage data."
+    },
+    "users/{userId}/scripts/{scriptId}": {
+      "schema": {
+        "$ref": "#/entities/VoiceoverScript"
+      },
+      "description": "Scripts saved by the user."
+    }
+  }
+}
